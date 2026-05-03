@@ -60,6 +60,8 @@
     }
 ?>
 
+<?php include '../templates/header.php'; ?>
+
 <?php if ($msg = getFlash('success')): ?>
     <p><?php echo htmlspecialchars($msg); ?></p>
 <?php endif; ?>
@@ -82,4 +84,6 @@
     <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
 
     <button type="submit">Register</button>
-</form>
+    </form>
+
+    <?php include '../templates/footer.php'; ?>

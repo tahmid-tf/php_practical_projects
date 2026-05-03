@@ -15,14 +15,10 @@
         die("Invalid CSRF token");
     }
 
-    $email    = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']);
+    $email    = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
     // ✅ Validation
-    if (empty($name)) {
-        $errors[] = "Name is required";
-    }
-
     if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Invalid email";
     }
@@ -45,13 +41,15 @@
 
             exit();
         } else {
-            echo "Invalid email or password";
+            $errors[] = "Invalid email or password";
         }
     }
 
     }
 
 ?>
+
+<?php include '../templates/header.php'; ?>
 
 <?php if ($msg = getFlash('success')): ?>
     <p><?php echo htmlspecialchars($msg); ?></p>
@@ -69,5 +67,8 @@
 <form method="post">
     <input type="email" name="email" placeholder="Email"><br>
     <input type="password" name="password" placeholder="Password"><br>
+    <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
     <input type="submit" value="Login">
 </form>
+
+<?php include '../templates/footer.php'; ?>
