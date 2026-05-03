@@ -18,18 +18,17 @@
 
         // Generate token
         $token  = bin2hex(random_bytes(32));
-        $expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
 
         // Save to DB
         $stmt = $pdo->prepare("
             UPDATE users
-            SET reset_token = ?, reset_token_expiry = ?
+            SET reset_token = ?, reset_token_expiry = DATE_ADD(NOW(), INTERVAL 1 HOUR)
             WHERE email = ?
         ");
-        $stmt->execute([$token, $expiry, $email]);
+        $stmt->execute([$token, $email]);
 
         // Simulate email (IMPORTANT)
-        $resetLink = "http://localhost/auth-system/public/reset-password.php?token=$token";
+        $resetLink = "http://php_practical_projects.test/auth-system/public/reset-password.php?token=$token";
 
         echo "Reset link (copy this): <br>";
         echo "<a href='$resetLink'>$resetLink</a>";
