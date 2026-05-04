@@ -55,3 +55,26 @@ $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 // $sql  = "INSERT INTO posts (title, body, is_published, author) VALUES (:title, :body, :is_published, :author)";
 // $stmt = $pdo->prepare($sql);
 // $stmt->execute(['title' => 'Post Four', 'body' => 'This is post three', 'is_published' => 1, 'author' => 'Tahmid']);
+
+// update data
+
+// $sql = "UPDATE posts SET title = :title, body = :body, is_published = :is_published, author = :author WHERE id = :id";
+// $stmt = $pdo->prepare($sql);
+// $stmt->execute(['title' => 'Post Four', 'body' => 'This is post three right?', 'is_published' => 1, 'author' => 'Tahmid Updated', 'id' => 3]);
+
+// delete data
+
+// $sql = "DELETE FROM posts WHERE id = :id";
+// $stmt = $pdo->prepare($sql);
+// $stmt->execute(['id' => 3]);
+
+//search data like
+
+$sql  = "SELECT * FROM posts WHERE title LIKE :search";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(['search' => '%fe%']);
+$row = $stmt->fetchAll();
+
+foreach ($row as $post) {
+    echo $post->title . "<br>";
+}
