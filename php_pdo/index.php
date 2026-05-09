@@ -78,3 +78,4 @@ $row = $stmt->fetchAll();
 foreach ($row as $post) {
     echo $post->title . "<br>";
 }
+
